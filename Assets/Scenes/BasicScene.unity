@@ -154,8 +154,8 @@ MonoBehaviour:
   XDistanceHands: 0
   YDistanceHands: 0
   IsGrounded: 0
-  ForwardSpeed: 3
-  BackwardSpeed: 3
+  ForwardSpeed: 15
+  BackwardSpeed: 15
   SidewardSpeed: 6
   RefXDistance: 0.65
 --- !u!114 &6699995
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EnableStrafe: 1
   m_EnableFly: 0
   m_UseGravity: 1
-  m_GravityApplicationMode: 0
+  m_GravityApplicationMode: 1
   m_ForwardSource: {fileID: 0}
   m_LeftHandMoveAction:
     m_UseReference: 0
@@ -416,7 +416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7696548424635294051, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 427.987
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7696548424635294051, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_LocalPosition.z

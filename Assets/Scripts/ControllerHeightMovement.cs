@@ -24,12 +24,12 @@ public class ControllerHeightMovement : MonoBehaviour
     [SerializeField] private bool IsGrounded;
 
     //Speed
-    [SerializeField] private float ForwardSpeed = 10;
+    [SerializeField] private float ForwardSpeed = 20;
     [SerializeField] private float BackwardSpeed = 10;
     [SerializeField] private float SidewardSpeed = 6;
 
     //x Distance where the movement is neither forward or backward
-    [SerializeField] private double RefXDistance = 0.15;
+    [SerializeField] private double RefXDistance = 0.55;
 
     void Start()
     {
@@ -75,11 +75,11 @@ public class ControllerHeightMovement : MonoBehaviour
             transform.position += SidewayDirection.transform.right * yDistanceHands * SidewardSpeed * Time.deltaTime;
             if (xDistanceHands > RefXDistance+0.1) 
             {
-                transform.position += -ForwardDirection.transform.forward * (float)(yDistanceHands-RefXDistance) * ForwardSpeed * Time.deltaTime;
+                transform.position += ForwardDirection.transform.forward * (float)(xDistanceHands-RefXDistance) * ForwardSpeed * Time.deltaTime;
             }
             if (xDistanceHands < RefXDistance - 0.1)
             {
-               transform.position += ForwardDirection.transform.forward * (float)(yDistanceHands - RefXDistance) * BackwardSpeed * Time.deltaTime;
+               transform.position += ForwardDirection.transform.forward * (float)(xDistanceHands - RefXDistance) * BackwardSpeed * Time.deltaTime;
             }
 
             //
