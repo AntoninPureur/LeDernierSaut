@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScriptTP : MonoBehaviour
+public class ScriptTP1 : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,6 @@ public class ScriptTP : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         other.transform.position = new Vector3(0, 400, 0);
-        GetComponent<MeshRenderer>().enabled = true;
     }
 
 }
