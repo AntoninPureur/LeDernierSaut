@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static System.Math;
 
@@ -61,10 +59,13 @@ public class ControllerHeightMovement : MonoBehaviour
 
         // get distances between controllers
         var yDistanceHands = PositionCurrentFrameLeftHand.y - PositionCurrentFrameRightHand.y;
-        var xDistanceHands =Abs(PositionCurrentFrameLeftHand.x- PositionCurrentFrameRightHand.x);
+        //var xDistanceHands =Abs(PositionCurrentFrameLeftHand.x- PositionCurrentFrameRightHand.x);
+        Vector2 horizontalPositionLeftHands = new Vector2(PositionCurrentFrameLeftHand.x, PositionCurrentFrameLeftHand.z);
+        Vector2 horizontalPositionRightHands = new Vector2(PositionCurrentFrameRightHand.x, PositionCurrentFrameRightHand.z);
+        var horizontalDistanceHands = Vector2.Distance(horizontalPositionLeftHands, horizontalPositionRightHands);
 
 
-        XDistanceHands = xDistanceHands;
+        //XDistanceHands = xDistanceHands;
         YDistanceHands = yDistanceHands;
         IsGrounded = isGrounded;
 
@@ -73,13 +74,13 @@ public class ControllerHeightMovement : MonoBehaviour
         if (Time.timeSinceLevelLoad > 1f)
         {
             transform.position += SidewayDirection.transform.right * yDistanceHands * SidewardSpeed * Time.deltaTime;
-            if (xDistanceHands > RefXDistance+0.1) 
+            if (horizontalDistanceHands > RefXDistance+0.1) 
             {
-                transform.position += ForwardDirection.transform.forward * (float)(xDistanceHands-RefXDistance) * ForwardSpeed * Time.deltaTime;
+                transform.position += ForwardDirection.transform.forward * (float)(horizontalDistanceHands - RefXDistance) * ForwardSpeed * Time.deltaTime;
             }
-            if (xDistanceHands < RefXDistance - 0.1)
+            if (horizontalDistanceHands < RefXDistance - 0.1)
             {
-               transform.position += ForwardDirection.transform.forward * (float)(xDistanceHands - RefXDistance) * BackwardSpeed * Time.deltaTime;
+               transform.position += ForwardDirection.transform.forward * (float)(horizontalDistanceHands - RefXDistance) * BackwardSpeed * Time.deltaTime;
             }
 
             //
