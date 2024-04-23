@@ -34,13 +34,14 @@ public class ScriptTP : NetworkBehaviour
     }
 
     // Méthode pour activer la texture sur tous les clients via un RPC
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     void RpcActivateTextureServerRpc()
     {
         // Appeler une méthode sur tous les clients pour activer la texture
         RpcActivateTextureClientRpc();
     }
 
+    
     // Méthode RPC client pour activer la texture sur tous les clients
     [ClientRpc]
     void RpcActivateTextureClientRpc()
