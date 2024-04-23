@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+// Script appliqué aux blocs aux fond de la piscine permettant de d'afficher sa texture et teleporter le joueur sur le plongeoir après collision
 
 public class ScriptTP : NetworkBehaviour
 {
@@ -25,8 +26,7 @@ public class ScriptTP : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Vérifier si le script est exécuté sur le serveur
-        // Changer la position de l'objet pour tous les joueurs
+        // Teleporte le joueur ayant effectué la collision
         other.transform.position = new Vector3(0, 400, 0);
 
         // Activer la texture pour tous les joueurs
