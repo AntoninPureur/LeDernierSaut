@@ -1,26 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
+
 
 public class ScriptTP : NetworkBehaviour
 {
+    // Référence au composant MeshRenderer
+    private MeshRenderer meshRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Récupérer le composant MeshRenderer au démarrage
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // Vérifier si le script est exécuté sur le serveur
+        // Changer la position de l'objet pour tous les joueurs
         other.transform.position = new Vector3(0, 400, 0);
-        GetComponent<MeshRenderer>().enabled = true;
+
+        // Activer la texture pour tous les joueurs
+        RpcActivateTextureServerRpc();
     }
 
+    // Méthode pour activer la texture sur tous les clients via un RPC
+    [ServerRpc]
+    void RpcActivateTextureServerRpc()
+    {
+        // Appeler une méthode sur tous les clients pour activer la texture
+        RpcActivateTextureClientRpc();
+    }
+
+    // Méthode RPC client pour activer la texture sur tous les clients
+    [ClientRpc]
+    void RpcActivateTextureClientRpc()
+    {
+        // Activer le composant MeshRenderer
+        meshRenderer.enabled = true;
+    }
 }

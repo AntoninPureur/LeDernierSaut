@@ -24,17 +24,17 @@ public class ControllerHeightMovement : MonoBehaviour
     [SerializeField] private bool IsGrounded;
 
     //Speed
-    [SerializeField] private float ForwardSpeed = 20;
+    [SerializeField] private float ForwardSpeed = 10;
     [SerializeField] private float BackwardSpeed = 10;
-    [SerializeField] private float SidewardSpeed = 6;
+    [SerializeField] private float SidewardSpeed = 2;
 
     //x Distance where the movement is neither forward or backward
-    [SerializeField] private double RefXDistance = 0.55;
+    [SerializeField] private double RefXDistance = 0.35;
 
     void Start()
     {
 
-        bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+
 
         PlayerPositionPreviousFrame = transform.position; //set current positions
         PositionPreviousFrameLeftHand = LeftHand.transform.position; //set previous positions
@@ -45,7 +45,8 @@ public class ControllerHeightMovement : MonoBehaviour
     void Update()
     {
 
-        bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+        bool isGrounded = Physics.Raycast(new Vector2(transform.position.x,transform.position.y+2.0f),Vector3.down,2.0f);
+        IsGrounded = isGrounded;
 
         // get forward direction from the center eye camera and set it to the forward direction object
         float yRotation = MainCamera.transform.eulerAngles.y;
