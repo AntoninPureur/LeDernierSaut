@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static System.Math;
 
-public class ControllerHeightMovement : MonoBehaviour
+public class AerialMovement : MonoBehaviour
 {
     // Game Objects
     [SerializeField] private GameObject LeftHand;
@@ -25,8 +25,8 @@ public class ControllerHeightMovement : MonoBehaviour
 
     //Speed
     [SerializeField] private float ForwardSpeed = 10;
-    [SerializeField] private float BackwardSpeed = 10;
-    [SerializeField] private float SidewardSpeed = 2;
+    [SerializeField] private float BackwardSpeed = 15;
+    [SerializeField] private float SidewardSpeed = 8;
 
     //x Distance where the movement is neither forward or backward
     [SerializeField] private double RefXDistance = 0.35;
@@ -45,7 +45,7 @@ public class ControllerHeightMovement : MonoBehaviour
     void Update()
     {
 
-        bool isGrounded = Physics.Raycast(new Vector2(transform.position.x,transform.position.y+2.0f),Vector3.down,2.0f);
+        bool isGrounded = !Physics.Raycast(new Vector2(transform.position.x,transform.position.y+2.0f),Vector3.down,2.0f);
         IsGrounded = isGrounded;
 
         // get forward direction from the center eye camera and set it to the forward direction object
@@ -60,9 +60,10 @@ public class ControllerHeightMovement : MonoBehaviour
         // position of player
         PlayerPositionCurrentFrame = transform.position;
 
-        // get distances between controllers
+        // get vertical distances between controllers
         var yDistanceHands = PositionCurrentFrameLeftHand.y - PositionCurrentFrameRightHand.y;
-        //var xDistanceHands =Abs(PositionCurrentFrameLeftHand.x- PositionCurrentFrameRightHand.x);
+        
+        // get horizontal distance between controllers
         Vector2 horizontalPositionLeftHands = new Vector2(PositionCurrentFrameLeftHand.x, PositionCurrentFrameLeftHand.z);
         Vector2 horizontalPositionRightHands = new Vector2(PositionCurrentFrameRightHand.x, PositionCurrentFrameRightHand.z);
         var horizontalDistanceHands = Vector2.Distance(horizontalPositionLeftHands, horizontalPositionRightHands);
@@ -73,20 +74,21 @@ public class ControllerHeightMovement : MonoBehaviour
         IsGrounded = isGrounded;
 
 
-
-        if (Time.timeSinceLevelLoad > 1f)
-        {
-            transform.position += SidewayDirection.transform.right * yDistanceHands * SidewardSpeed * Time.deltaTime;
-            if (horizontalDistanceHands > RefXDistance + 0.1)
+        if (!IsGrounded) { 
+            if (Time.timeSinceLevelLoad > 1f)
             {
-                transform.position += ForwardDirection.transform.forward * (float)(horizontalDistanceHands - RefXDistance) * ForwardSpeed * Time.deltaTime;
-            }
-            if (horizontalDistanceHands < RefXDistance - 0.1)
-            {
-                transform.position += ForwardDirection.transform.forward * (float)(horizontalDistanceHands - RefXDistance) * BackwardSpeed * Time.deltaTime;
-            }
+                transform.position += SidewayDirection.transform.right * yDistanceHands * SidewardSpeed * Time.deltaTime;
+                if (horizontalDistanceHands > RefXDistance + 0.1)
+                {
+                    transform.position += ForwardDirection.transform.forward * (float)(horizontalDistanceHands - RefXDistance) * ForwardSpeed * Time.deltaTime;
+                }
+                if (horizontalDistanceHands < RefXDistance - 0.1)
+                {
+                    transform.position += ForwardDirection.transform.forward * (float)(horizontalDistanceHands - RefXDistance) * BackwardSpeed * Time.deltaTime;
+                }
 
             //
+            }
         }
         // set previous position of hands for next frame
         PositionPreviousFrameLeftHand = PositionCurrentFrameLeftHand;
