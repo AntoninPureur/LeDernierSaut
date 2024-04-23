@@ -18,7 +18,7 @@ public class ScriptTP1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.transform.position = new Vector3(0, 400, 0);
+        other.transform.position = new Vector3(63, 20, 500);
     }
 
 }
