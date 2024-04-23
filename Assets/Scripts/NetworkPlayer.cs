@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+
 public class NetworkPlayer : NetworkBehaviour
 {
-
+    public ulong playerId;
     public Transform root;
     public Transform head;
     public Transform leftHand;
@@ -22,6 +23,8 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 item.enabled = false;
             }
+            playerId = NetworkObjectId;
+            Debug.LogError("Player ID: " + playerId);
         }
         
     }

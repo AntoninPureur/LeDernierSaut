@@ -9,15 +9,15 @@ public class ScriptTP : NetworkBehaviour
 {
     // Référence au composant MeshRenderer
     private MeshRenderer meshRenderer;
-    public int etat;
-
+    public bool block;
+    public ulong id = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         // Récupérer le composant MeshRenderer au démarrage
         meshRenderer = GetComponent<MeshRenderer>();
-        etat = 0;
+        block = false;
     }
 
     // Update is called once per frame
@@ -29,53 +29,52 @@ public class ScriptTP : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (etat == 0)
+        if (!block)
         {
             // Vérifier si le script est exécuté sur le serveur
             // Changer la position de l'objet pour tous les joueurs
             other.transform.position = new Vector3(0, 400, 0);
 
             // Activer la texture pour tous les joueurs
-            RpcActivateTextureServerRpc();
+            ActivateTextureServerRpc();
+            UpdateBlockServerRpc();
         }
 
-        if (etat == 1)
+        if (block)
         {
-
-            WinScreenServerRpc();
+            id = other.GetComponent<NetworkPlayer>().playerId;
+            Debug.LogError(id);
         }
 
-        etat++;
+        Debug.LogError(block);
     }
 
     // Méthode pour activer la texture sur tous les clients via un RPC
     [ServerRpc(RequireOwnership = false)]
-    void RpcActivateTextureServerRpc()
+    void ActivateTextureServerRpc()
     {
         // Appeler une méthode sur tous les clients pour activer la texture
-        RpcActivateTextureClientRpc();
+        ActivateTextureClientRpc();
     }
-
     [ServerRpc(RequireOwnership = false)]
-    void WinScreenServerRpc()
+    void UpdateBlockServerRpc()
     {
-        // Appeler une méthode sur tous les clients pour activer la texture
-        WinScreenClientRpc();
+        // Mettre à jour le booléen "block" pour tous les joueurs
+        UpdateBlockClientRpc();
     }
-
 
     // Méthode RPC client pour activer la texture sur tous les clients
     [ClientRpc]
-    void RpcActivateTextureClientRpc()
+    void ActivateTextureClientRpc()
     {
         // Activer le composant MeshRenderer
         meshRenderer.enabled = true;
     }
-
     [ClientRpc]
-    void WinScreenClientRpc()
+    void UpdateBlockClientRpc()
     {
-
+        // Mettre à jour le booléen "block" pour tous les joueurs
+        block = true;
     }
 
 }

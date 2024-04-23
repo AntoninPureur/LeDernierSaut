@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4891121074616552565}
   m_Layer: 0
   m_Name: Network Player
-  m_TagString: Untagged
+  m_TagString: MyPlayerTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c64c2a7bdf84f847ad208c6419fe3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   root: {fileID: 1735527631391030564}
   head: {fileID: 49313731817429850}
   leftHand: {fileID: 5390943936301835513}
