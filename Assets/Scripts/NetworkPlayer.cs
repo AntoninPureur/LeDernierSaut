@@ -13,11 +13,13 @@ public class NetworkPlayer : NetworkBehaviour
 
     public Renderer[] meshToDisable;
 
+    // spawns player
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         if (IsOwner)
         {
+            // Deactivates the player model for the player
             foreach (var item in meshToDisable)
             {
                 item.enabled = false;
@@ -27,9 +29,10 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
 
-    // Update is called once per frame
+ 
     void Update()
     {
+        // update the position of the player model for every other players
         if(IsOwner)
         {
             root.position = VRRigReferences.Singleton.root.position;
