@@ -44,8 +44,8 @@ public class AerialMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        bool isGrounded = !Physics.Raycast(new Vector2(transform.position.x,transform.position.y+2.0f),Vector3.down,2.0f);
+        bool act = true;
+        bool isGrounded = !Physics.Raycast(new Vector2(transform.position.x,transform.position.y+3.0f),Vector3.down,3.0f);
         IsGrounded = isGrounded;
 
         // get forward direction from the center eye camera and set it to the forward direction object
@@ -74,7 +74,7 @@ public class AerialMovement : MonoBehaviour
         IsGrounded = isGrounded;
 
 
-        if (!IsGrounded) { 
+        if (act) { 
             if (Time.timeSinceLevelLoad > 1f)
             {
                 transform.position += SidewayDirection.transform.right * yDistanceHands * SidewardSpeed * Time.deltaTime;
